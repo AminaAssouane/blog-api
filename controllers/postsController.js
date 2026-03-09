@@ -21,8 +21,17 @@ async function postPost(req, res) {
 }
 
 async function putPost(req, res) {
+  const { postId } = req.params;
+  const { title, content, published } = req.body;
   try {
-  } catch (error) {}
+    const updatedPost = await db.updatePost(postId, title, content, published);
+    res.json({ message: "Post updated", post: updatedPost });
+  } catch (error) {
+    console.error(error);
+    res
+      .status(error.message === "Post not found" ? 404 : 500)
+      .json({ error: error.message });
+  }
 }
 
 async function deletePost(req, res) {
