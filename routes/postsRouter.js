@@ -13,7 +13,7 @@ postsRouter.get("/:postId", postsController.getPostById);
 postsRouter.get("/:postId/comments", postsController.getComments);
 postsRouter.post("/:postId/comments", postsController.postComment);
 postsRouter.delete(
-  "/:postId/comments/commentId",
+  "/:postId/comments/:commentId",
   postsController.deleteComment,
 );
 

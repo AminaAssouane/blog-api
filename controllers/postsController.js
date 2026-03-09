@@ -56,11 +56,39 @@ async function getPostById(req, res) {
   }
 }
 
-async function getComments(req, res) {}
+async function getComments(req, res) {
+  const { postId } = req.params;
+  try {
+    const comments = await db.getComments(postId);
+    res.json(comments);
+  } catch (error) {
+    console.error("Could not get comments : ", error);
+    res.status(500).json({ error: "Failed to fetch comments" });
+  }
+}
 
-async function postComment(req, res) {}
+async function postComment(req, res) {
+  const { postId } = req.params;
+  const { username, content } = req.body;
+  try {
+    const comment = await db.createComment(Number(postId), username, content);
+    res.status(201).json(comment);
+  } catch (error) {
+    console.error("Could not create comment : ", error);
+    res.status(500).json({ error: "Failed to create comment" });
+  }
+}
 
-async function deleteComment(req, res) {}
+async function deleteComment(req, res) {
+  const { postId, commentId } = req.params;
+  try {
+    const deleted = await db.deleteComment(Number(postId), Number(commentId));
+    res.json({ message: "Comment deleted", post: deleted });
+  } catch (error) {
+    console.error("Could not delete comment : ", error);
+    res.status(404).json({ error: "Comment not found" });
+  }
+}
 
 module.exports = {
   getPosts,
