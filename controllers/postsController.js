@@ -20,8 +20,20 @@ async function postPost(req, res) {
   }
 }
 
-async function putPost() {}
+async function putPost(req, res) {
+  try {
+  } catch (error) {}
+}
 
-async function deletePost() {}
+async function deletePost(req, res) {
+  try {
+    const { postId } = req.params;
+    const deleted = await db.deletePost(postId);
+    res.json({ message: "Post deleted.", post: deleted });
+  } catch (error) {
+    console.error(error);
+    res.status(404).json({ error: "Post not found." });
+  }
+}
 
 module.exports = { getPosts, postPost, putPost, deletePost };
