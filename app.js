@@ -9,7 +9,7 @@ const app = express();
 app.use(express.json());
 
 app.use("/", indexRouter);
-//app.use("/auth", authRouter);
+app.use("/login", authRouter);
 app.use("/posts", postsRouter);
 
 const PORT = process.env.PORT || 3000;
