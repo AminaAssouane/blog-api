@@ -56,4 +56,19 @@ async function getPostById(req, res) {
   }
 }
 
-module.exports = { getPosts, postPost, putPost, deletePost, getPostById };
+async function getComments(req, res) {}
+
+async function postComment(req, res) {}
+
+async function deleteComment(req, res) {}
+
+module.exports = {
+  getPosts,
+  postPost,
+  putPost,
+  deletePost,
+  getPostById,
+  getComments,
+  postComment,
+  deleteComment,
+};
