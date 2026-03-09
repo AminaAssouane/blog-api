@@ -20,4 +20,8 @@ async function postPost(req, res) {
   }
 }
 
-module.exports = { getPosts, postPost };
+async function putPost() {}
+
+async function deletePost() {}
+
+module.exports = { getPosts, postPost, putPost, deletePost };
