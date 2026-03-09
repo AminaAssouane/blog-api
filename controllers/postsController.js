@@ -1,4 +1,4 @@
-const db = require("../prisma/queries");
+const db = require("../lib/queries");
 
 async function getPosts(req, res) {
   try {
