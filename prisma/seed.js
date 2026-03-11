@@ -1,5 +1,12 @@
 const bcrypt = require("bcrypt");
 const prisma = require("../lib/prisma");
+const {
+  post1Content,
+  post2Content,
+  post3Content,
+  post4Content,
+  post5Content,
+} = require("./postContents.js");
 
 async function main() {
   // 1: Create user (admin)
@@ -29,8 +36,10 @@ async function main() {
   // 2: Create posts
   const post1 = await prisma.post.create({
     data: {
-      title: "My First Blog Post",
-      content: "Welcome to my blog!",
+      title: "Welcome to my blog!",
+      content: post1Content,
+      image:
+        "https://res.cloudinary.com/doepihomb/image/upload/v1773244163/blog1_tmdlcc.jpg",
       published: true,
       userId: user.id,
     },
@@ -38,8 +47,10 @@ async function main() {
 
   const post2 = await prisma.post.create({
     data: {
-      title: "Learning Full Stack Development",
-      content: "Building APIs with Node and Prisma.",
+      title: "Staying motivated",
+      content: post2Content,
+      image:
+        "https://res.cloudinary.com/doepihomb/image/upload/v1773244163/blog2_drmxih.jpg",
       published: true,
       userId: user.id,
     },
@@ -47,9 +58,33 @@ async function main() {
 
   const post3 = await prisma.post.create({
     data: {
-      title: "Draft Post",
-      content: "This one is not published yet.",
-      published: false,
+      title: "How writing tests can save time in the long run",
+      content: post3Content,
+      image:
+        "https://res.cloudinary.com/doepihomb/image/upload/v1773244163/blog3_hvjpyz.jpg",
+      published: true,
+      userId: user.id,
+    },
+  });
+
+  const post4 = await prisma.post.create({
+    data: {
+      title: "Understanding async in JavaScript",
+      content: post4Content,
+      image:
+        "https://res.cloudinary.com/doepihomb/image/upload/v1773244163/blog4_drybyc.jpg",
+      published: true,
+      userId: user.id,
+    },
+  });
+
+  const post5 = await prisma.post.create({
+    data: {
+      title: "Building RESTful APIs with Node and Express",
+      content: post5Content,
+      image:
+        "https://res.cloudinary.com/doepihomb/image/upload/v1773244163/blog5_xwaqdi.jpg",
+      published: true,
       userId: user.id,
     },
   });
