@@ -7,6 +7,8 @@ const postsRouter = require("./routes/postsRouter");
 
 const app = express();
 
+app.use(cors()); // allows requests from any origin
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
