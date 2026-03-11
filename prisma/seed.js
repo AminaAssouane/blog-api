@@ -14,7 +14,7 @@ async function main() {
 
   const hashedPassword = await bcrypt.hash("admin", 10);
 
-  await prisma.user.create({
+  const user = await prisma.user.create({
     data: {
       firstName: "Amina",
       lastName: "Assouane",
@@ -27,27 +27,31 @@ async function main() {
   console.log("Author created");
 
   // 2: Create posts
-  const posts = await prisma.post.createMany({
-    data: [
-      {
-        title: "My First Blog Post",
-        content: "Welcome to my blog!",
-        published: true,
-        authorId: user.id,
-      },
-      {
-        title: "Learning Full Stack Development",
-        content: "Building APIs with Node and Prisma.",
-        published: true,
-        authorId: user.id,
-      },
-      {
-        title: "Draft Post",
-        content: "This one is not published yet.",
-        published: false,
-        authorId: user.id,
-      },
-    ],
+  const post1 = await prisma.post.create({
+    data: {
+      title: "My First Blog Post",
+      content: "Welcome to my blog!",
+      published: true,
+      userId: user.id,
+    },
+  });
+
+  const post2 = await prisma.post.create({
+    data: {
+      title: "Learning Full Stack Development",
+      content: "Building APIs with Node and Prisma.",
+      published: true,
+      userId: user.id,
+    },
+  });
+
+  const post3 = await prisma.post.create({
+    data: {
+      title: "Draft Post",
+      content: "This one is not published yet.",
+      published: false,
+      userId: user.id,
+    },
   });
 
   console.log("Posts created");
@@ -58,12 +62,12 @@ async function main() {
       {
         username: "Jess",
         content: "Great post!",
-        postId: 1,
+        postId: post1.id,
       },
       {
         username: "dragonDev",
         content: "Very helpful article.",
-        postId: 1,
+        postId: post1.id,
       },
     ],
   });
