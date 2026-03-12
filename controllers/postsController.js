@@ -10,6 +10,16 @@ async function getPosts(req, res) {
   }
 }
 
+async function getAllPosts(req, res) {
+  try {
+    const posts = await db.getAllPosts();
+    res.json(posts);
+  } catch (error) {
+    console.error("Could not get all posts : ", error);
+    res.status(500).json({ error: "Failed to fetch all posts" });
+  }
+}
+
 async function postPost(req, res) {
   try {
     const post = await db.postPost(req.body);
@@ -68,8 +78,7 @@ async function getComments(req, res) {
 }
 
 async function postComment(req, res) {
-  const { postId } = req.params;
-  const { username, content } = req.body;
+  const { postId, username, content } = req.body;
   try {
     const comment = await db.createComment(Number(postId), username, content);
     res.status(201).json(comment);
@@ -92,6 +101,7 @@ async function deleteComment(req, res) {
 
 module.exports = {
   getPosts,
+  getAllPosts,
   postPost,
   putPost,
   deletePost,
