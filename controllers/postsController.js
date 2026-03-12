@@ -10,6 +10,16 @@ async function getPosts(req, res) {
   }
 }
 
+async function getUnpublishedPosts(req, res) {
+  try {
+    const posts = await db.getUnpublishedPosts();
+    res.json(posts);
+  } catch (error) {
+    console.error("Could not get unpublished posts : ", error);
+    res.status(500).json({ error: "Failed to fetch unpublished posts" });
+  }
+}
+
 async function getAllPosts(req, res) {
   try {
     const posts = await db.getAllPosts();
@@ -101,6 +111,7 @@ async function deleteComment(req, res) {
 
 module.exports = {
   getPosts,
+  getUnpublishedPosts,
   getAllPosts,
   postPost,
   putPost,

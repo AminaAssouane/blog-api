@@ -5,6 +5,11 @@ const authenticateToken = require("../middleware/authMiddleware");
 const postsRouter = Router();
 
 postsRouter.get("/", postsController.getPosts);
+postsRouter.get(
+  "/unpublished",
+  authenticateToken,
+  postsController.getUnpublishedPosts,
+);
 postsRouter.get("/all", authenticateToken, postsController.getAllPosts);
 postsRouter.post("/", authenticateToken, postsController.postPost);
 postsRouter.put("/:postId", authenticateToken, postsController.putPost);
