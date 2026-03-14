@@ -32,7 +32,7 @@ async function getAllPosts(req, res) {
 
 async function postPost(req, res) {
   try {
-    const post = await db.postPost(req.body);
+    const post = await db.postPost(req.user, req.body);
     res.status(201).json(post);
   } catch (error) {
     console.error("Could not create post : ", error);

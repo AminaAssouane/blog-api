@@ -6,13 +6,11 @@ async function login(req, res) {
   const { username, password } = req.body;
 
   const user = await db.getUserByUsername(username);
-
   if (!user) {
     return res.status(401).json({ error: "Invalid credentials" });
   }
 
   const match = await bcrypt.compare(password, user.passwordHash);
-
   if (!match) {
     return res.status(401).json({ error: "Invalid credentials" });
   }
