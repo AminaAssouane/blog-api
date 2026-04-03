@@ -1,7 +1,7 @@
 const { Router } = require("express");
 const postsController = require("../controllers/postsController");
 const authenticateToken = require("../middleware/authMiddleware");
-const upload = require("../middlewares/multer");
+const upload = require("../middleware/multer");
 
 const postsRouter = Router();
 
