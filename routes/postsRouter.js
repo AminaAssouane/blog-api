@@ -1,6 +1,7 @@
 const { Router } = require("express");
 const postsController = require("../controllers/postsController");
 const authenticateToken = require("../middleware/authMiddleware");
+const upload = require("../middlewares/multer");
 
 const postsRouter = Router();
 
@@ -11,7 +12,12 @@ postsRouter.get(
   postsController.getUnpublishedPosts,
 );
 postsRouter.get("/all", authenticateToken, postsController.getAllPosts);
-postsRouter.post("/", authenticateToken, postsController.postPost);
+postsRouter.post(
+  "/",
+  authenticateToken,
+  upload.single("image"),
+  postsController.postPost,
+);
 postsRouter.put("/:postId", authenticateToken, postsController.putPost);
 postsRouter.delete("/:postId", authenticateToken, postsController.deletePost);
 

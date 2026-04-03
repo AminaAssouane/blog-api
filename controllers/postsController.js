@@ -1,4 +1,5 @@
 const db = require("../lib/queries");
+const cloudinary = require("../config/cloudinary");
 
 async function getPosts(req, res) {
   try {
@@ -30,9 +31,32 @@ async function getAllPosts(req, res) {
   }
 }
 
+function uploadToCloudinary(fileBuffer) {
+  return new Promise((resolve, reject) => {
+    const stream = cloudinary.uploader.upload_stream(
+      { folder: "blog_api" },
+      (error, result) => {
+        if (error) reject(error);
+        else resolve(result);
+      },
+    );
+
+    stream.end(fileBuffer);
+  });
+}
+
 async function postPost(req, res) {
   try {
-    const post = await db.postPost(req.user, req.body);
+    let imageUrl = "";
+    if (req.file) {
+      const result = await uploadToCloudinary(req.file.buffer);
+      imageUrl = result.secure_url;
+    }
+    const postData = {
+      ...req.body,
+      image: imageUrl,
+    };
+    const post = await db.postPost(req.user, postData);
     res.status(201).json(post);
   } catch (error) {
     console.error("Could not create post : ", error);
